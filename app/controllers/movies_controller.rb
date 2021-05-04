@@ -5,7 +5,7 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.all
 
-    render json: @movies
+    render json: @movies, include: [:category]
   end
 
   # GET /movies/1
@@ -36,6 +36,7 @@ class MoviesController < ApplicationController
   # DELETE /movies/1
   def destroy
     @movie.destroy
+    render json: @movie
   end
 
   private
@@ -46,6 +47,6 @@ class MoviesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def movie_params
-      params.require(:movie).permit(:title, :image_url, :description, :deadline, :category_id)
+      params.require(:movie).permit(:title, :image_url, :description, :deadline, :category_attributes, :category_id)
     end
 end
