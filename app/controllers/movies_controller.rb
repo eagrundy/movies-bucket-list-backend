@@ -1,5 +1,6 @@
 class MoviesController < ApplicationController
   before_action :set_movie, only: [:show, :update, :destroy]
+  # skip_before_action :verify_authenticity_token
 
   # GET /movies
   def index
@@ -15,10 +16,12 @@ class MoviesController < ApplicationController
 
   # POST /movies
   def create
+    # binding.pry
     @movie = Movie.new(movie_params)
 
     if @movie.save
-      render json: @movie, status: :created, location: @movie
+      render json: @movie
+      # , status: :created, location: @movie   
     else
       render json: @movie.errors, status: :unprocessable_entity
     end
@@ -47,6 +50,6 @@ class MoviesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def movie_params
-      params.require(:movie).permit(:title, :image_url, :description, :deadline, :category_attributes, :category_id)
+      params.require(:movie).permit(:title, :image_url, :description, :watch, :category_attributes, :category)
     end
 end
