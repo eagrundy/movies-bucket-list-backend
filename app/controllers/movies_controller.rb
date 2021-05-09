@@ -1,6 +1,5 @@
 class MoviesController < ApplicationController
   before_action :set_movie, only: [:show, :update, :destroy]
-  # skip_before_action :verify_authenticity_token
 
   # GET /movies
   def index
