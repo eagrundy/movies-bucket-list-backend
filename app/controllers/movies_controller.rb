@@ -2,9 +2,8 @@ class MoviesController < ApplicationController
   before_action :set_movie, only: [:show, :update, :destroy]
 
   # GET /movies
-  def index
-    @movies = Movie.all
-
+  def index 
+    @movies = Movie.all.order('created_at DESC')
     render json: @movies, include: [:category]
   end
 
@@ -17,7 +16,6 @@ class MoviesController < ApplicationController
   def create
     # binding.pry
     @movie = Movie.new(movie_params)
-
     if @movie.save
       render json: @movie
       # , status: :created, location: @movie   
@@ -49,6 +47,6 @@ class MoviesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def movie_params
-      params.require(:movie).permit(:title, :image_url, :description, :watch, :category_attributes, :category)
+      params.require(:movie).permit(:title, :image_url, :description, :watch, :category_attributes, :id, :category_name, :category, :category_id)
     end
 end
